@@ -1230,3 +1230,34 @@ input[type="date"].input { padding-right: 14px; }
 .level-icon svg { width: 18px; height: 18px; }
 .level b { gap: 10px; margin-bottom: 6px; }
 @media (max-width: 959px) { .format-card .stage + .stage { margin-top: 12px; } }
+
+/* Kart kapağı fotoğrafı: öğrenci videolarından kesit; ikon ve rozet üstte kalır */
+.soft-cover.has-photo { min-height: 170px; overflow: hidden; }
+.cover-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform var(--t-soft); }
+.soft-cover.has-photo::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(33, 28, 78, 0.45), rgba(33, 28, 78, 0) 65%);
+}
+.soft-cover.has-photo > :not(.cover-photo) { position: relative; z-index: 1; }
+.soft-cover.has-photo .chip { position: absolute; }
+.soft-card:hover .cover-photo { transform: scale(1.04); }
+.soft-card[data-time="past"] .cover-photo { filter: saturate(0.55); }
+
+/* Alt sayfa bandı: leylak zemin alta doğru sayfa zeminine erir; sert kenar olmasın */
+.page-banner { background: linear-gradient(to bottom, rgba(0,0,0,0) 45%, var(--bg) 100%), var(--hero-bg); }
+.page-banner-art {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 34%),
+    linear-gradient(to bottom, #000 45%, transparent 96%);
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 34%),
+    linear-gradient(to bottom, #000 45%, transparent 96%);
+}
+@media (max-width: 760px) {
+  .page-banner-art {
+    -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 50%, transparent 100%);
+  }
+}
+/* Kart fotoğrafı alt kenarda kart gövdesine erir */
+.soft-cover.has-photo::after { background: linear-gradient(to top, var(--surface) 0%, color-mix(in srgb, var(--surface) 55%, transparent) 16%, transparent 45%); }

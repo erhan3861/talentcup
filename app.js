@@ -177,13 +177,7 @@
       city: 'İli yazın.',
       name: 'Ad soyad yazın.',
       role: 'Görevinizi seçin.',
-      email: 'Geçerli bir e-posta adresi yazın. Örnek: ad@okul.k12.tr',
       phone: 'Telefon numarasını 10 ya da 11 haneli yazın.',
-      type: 'Yarışma türünü seçin.',
-      levels: 'En az bir seviye seçin.',
-      topic: 'Konu alanını seçin.',
-      count: 'Tahmini öğrenci sayısını seçin.',
-      end: 'Bitiş tarihi başlangıçtan önce olamaz.',
       consent: 'Devam etmek için aydınlatma metnini onaylayın.'
     };
 
@@ -237,15 +231,8 @@
       ['school', 'city', 'name', 'role'].forEach(function (n) {
         if (!f[n].value.trim()) errors.push(n);
       });
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())) errors.push('email');
       var digits = f.phone.value.replace(/\D/g, '');
       if (digits.length < 10 || digits.length > 11) errors.push('phone');
-      if (!form.querySelector('input[name="type"]:checked')) errors.push('type');
-      if (!form.querySelector('input[name="levels"]:checked')) errors.push('levels');
-      ['topic', 'count'].forEach(function (n) {
-        if (!f[n].value.trim()) errors.push(n);
-      });
-      if (f.start.value && f.end.value && f.end.value < f.start.value) errors.push('end');
       if (!f.consent.checked) errors.push('consent');
       return errors;
     }
