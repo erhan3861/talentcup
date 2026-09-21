@@ -1514,3 +1514,5 @@ html, body { overflow-x: clip; }
   background-image: url("img/banner-gorevler.webp");
   background-position: 50% 45%;
 }
+.page-banner-art.art-proje { background-image: url("img/banner-proje.webp"); background-position: 50% 55%; }
+.page-banner-art.art-hikaye { background-image: url("img/banner-hikaye.webp"); background-position: 50% 45%; }

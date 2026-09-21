@@ -560,6 +560,16 @@
     window.addEventListener('scroll', update, { passive: true });
   }
 
+  /* --- Yarışma bandı: tıklanan kartın görseli --------------------------- */
+  // Kartlar yarisma.html?kart=<ad> ile gelir; bant o kartın fotoğrafını alır.
+  // Parametre yoksa ya da tanınmıyorsa varsayılan sahne görseli kalır.
+  function initKartArt() {
+    var art = document.querySelector('[data-kart-art]');
+    if (!art) return;
+    var kart = new URLSearchParams(window.location.search).get('kart');
+    if (['gorevler', 'proje', 'hikaye'].indexOf(kart) !== -1) art.classList.add('art-' + kart);
+  }
+
   /* --- Başlat ------------------------------------------------------------ */
   initTheme();
   document.addEventListener('DOMContentLoaded', function () {
@@ -572,5 +582,6 @@
     initCodeweek();
     initCountdown();
     initStickyShadow();
+    initKartArt();
   });
 })();
