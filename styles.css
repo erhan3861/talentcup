@@ -1261,3 +1261,12 @@ input[type="date"].input { padding-right: 14px; }
 }
 /* Kart fotoğrafı alt kenarda kart gövdesine erir */
 .soft-cover.has-photo::after { background: linear-gradient(to top, var(--surface) 0%, color-mix(in srgb, var(--surface) 55%, transparent) 16%, transparent 45%); }
+
+/* Talent Cup nedir: 2026 seviye kartları */
+.make-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s5); }
+@media (min-width: 760px) { .make-grid { grid-template-columns: repeat(3, 1fr); } }
+.make-card { padding: var(--s6); }
+.make-card .level-icon { width: 48px; height: 48px; margin-bottom: var(--s4); }
+.make-card .level-icon svg { width: 24px; height: 24px; }
+.make-card h3 { font-size: 21px; font-weight: 900; color: var(--peach-ink); }
+.make-card p { margin-top: 6px; font-size: 17px; color: var(--text-muted); }
