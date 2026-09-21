@@ -20,7 +20,8 @@
       var label = btn.querySelector('.visually-hidden');
       if (label) label.textContent = isDark ? 'Açık temaya geç' : 'Koyu temaya geç';
       btn.querySelectorAll('[data-icon]').forEach(function (icon) {
-        icon.hidden = icon.getAttribute('data-icon') !== (isDark ? 'sun' : 'moon');
+        // SVG'de .hidden özelliği yok; öznitelik doğrudan değiştirilir
+        icon.toggleAttribute('hidden', icon.getAttribute('data-icon') !== (isDark ? 'sun' : 'moon'));
       });
     });
   }
@@ -52,7 +53,7 @@
         var label = btn.querySelector('.visually-hidden');
         if (label) label.textContent = show ? 'Şifreyi gizle' : 'Şifreyi göster';
         btn.querySelectorAll('[data-icon]').forEach(function (icon) {
-          icon.hidden = icon.getAttribute('data-icon') !== (show ? 'eye-off' : 'eye');
+          icon.toggleAttribute('hidden', icon.getAttribute('data-icon') !== (show ? 'eye-off' : 'eye'));
         });
       });
     });
@@ -313,6 +314,189 @@
     modal.addEventListener('modal:close', function () { slot.replaceChildren(); });
   }
 
+  /* --- Görsel carousel ---------------------------------------------------- */
+  // Yatay kaydırma + scroll-snap: parmakla da kayar. Otomatik ilerler; imleç
+  // ya da odak üstündeyken durur, durdur butonu var (WCAG 2.2.2).
+  // Hareket azaltma tercihi açıksa otomatik ilerleme hiç başlamaz.
+  function initCarousel() {
+    var root = document.querySelector('[data-carousel]');
+    if (!root) return;
+    var track = root.querySelector('[data-carousel-track]');
+    var section = root.closest('section');
+    var prev = section.querySelector('[data-carousel-prev]');
+    var next = section.querySelector('[data-carousel-next]');
+    var toggle = section.querySelector('[data-carousel-toggle]');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var paused = reduce, hover = false, timer = null;
+
+    function step() {
+      var s = track.querySelector('.slide');
+      return s ? s.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0) : 300;
+    }
+    function go(dir) {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      if (dir > 0 && track.scrollLeft >= max) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else if (dir < 0 && track.scrollLeft <= 2) track.scrollTo({ left: max + 2, behavior: 'smooth' });
+      else track.scrollBy({ left: dir * step(), behavior: 'smooth' });
+    }
+    function setToggle() {
+      toggle.setAttribute('aria-pressed', String(paused));
+      toggle.setAttribute('aria-label', paused ? 'Otomatik kaydırmayı başlat' : 'Otomatik kaydırmayı durdur');
+      toggle.querySelector('[data-icon="pause"]').toggleAttribute('hidden', paused);
+      toggle.querySelector('[data-icon="play"]').toggleAttribute('hidden', !paused);
+    }
+    function tick() { if (!paused && !hover && !document.hidden) go(1); }
+
+    prev.addEventListener('click', function () { go(-1); });
+    next.addEventListener('click', function () { go(1); });
+    toggle.addEventListener('click', function () { paused = !paused; setToggle(); });
+    root.addEventListener('mouseenter', function () { hover = true; });
+    root.addEventListener('mouseleave', function () { hover = false; });
+    root.addEventListener('focusin', function () { hover = true; });
+    root.addEventListener('focusout', function () { hover = false; });
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+    });
+    setToggle();
+    timer = setInterval(tick, 4500);
+  }
+
+  /* --- EU Code Week: Talent Cup haritası -------------------------------- */
+  // Veri: data/codeweek-talentcup.js (codeweek.eu aramasından derlendi).
+  // Leaflet bölüm ekrana yaklaşınca yüklenir; harita dışındaki sayılar ve
+  // il listesi haritasız da çalışır. Codeweek listesi ancak istenince iframe'e gelir.
+  var LEAFLET = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/';
+  function loadLeaflet(cb) {
+    if (window.L) { cb(); return; }
+    var css = document.createElement('link');
+    css.rel = 'stylesheet'; css.href = LEAFLET + 'leaflet.min.css';
+    document.head.appendChild(css);
+    var s = document.createElement('script');
+    s.src = LEAFLET + 'leaflet.min.js'; s.onload = cb;
+    document.head.appendChild(s);
+  }
+
+  function initCodeweek() {
+    var section = document.getElementById('codeweek');
+    var data = window.TC_CODEWEEK;
+    if (!section || !data) return;
+    var years = section.querySelector('[data-cw-years]');
+    var mapEl = section.querySelector('[data-cw-map]');
+    var citiesEl = section.querySelector('[data-cw-cities]');
+    var openLink = section.querySelector('[data-cw-open]');
+    var embedBtn = section.querySelector('[data-cw-embed]');
+    var embedSlot = section.querySelector('[data-cw-embed-slot]');
+    var source = section.querySelector('[data-cw-source]');
+    var onlineEl = section.querySelector('[data-cw-online]');
+    var stat = function (k) { return section.querySelector('[data-cw-stat="' + k + '"]'); };
+    var year = (years.querySelector('[aria-pressed="true"]') || {}).getAttribute ? years.querySelector('[aria-pressed="true"]').getAttribute('data-value') : '2025';
+    var map = null, layer = null;
+    var fmt = new Intl.NumberFormat('tr-TR');
+
+    function rows() {
+      return data.events.filter(function (e) { return year === 'all' || String(e.y) === year; });
+    }
+    function searchUrl() {
+      return 'https://codeweek.eu/events?page=1&year=' + (year === 'all' ? '2025' : year) + '&query=talentcup';
+    }
+    function esc(s) {
+      return String(s || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
+    }
+
+    function drawMap(list) {
+      if (!map) return;
+      if (layer) layer.remove();
+      layer = L.layerGroup();
+      list.forEach(function (e) {
+        if (e.on) return;
+        var m = L.circleMarker([e.lat, e.lng], {
+          radius: 7, weight: 2, color: '#ffffff',
+          fillColor: e.y === 2025 ? '#5b43e0' : '#f59d0b', fillOpacity: 0.9
+        });
+        m.bindPopup('<strong>' + esc(e.t) + '</strong><br>' + esc(e.o) + '<br><span>' + esc(e.c) + ' · ' + esc(e.d) +
+          '</span><br><a href="https://codeweek.eu/view/' + e.id + '/' + esc(e.s) + '" target="_blank" rel="noopener">codeweek.eu’da gör</a>');
+        layer.addLayer(m);
+      });
+      layer.addTo(map);
+    }
+
+    function render() {
+      var list = rows();
+      var cities = {};
+      var orgs = {}, online = 0;
+      list.forEach(function (e) {
+        if (e.c) cities[e.c] = (cities[e.c] || 0) + 1;
+        if (e.on) online += 1;
+        orgs[(e.o || '').toLocaleLowerCase('tr')] = 1;
+      });
+      var ranked = Object.keys(cities).map(function (c) { return [c, cities[c]]; })
+        .sort(function (a, b) { return b[1] - a[1] || a[0].localeCompare(b[0], 'tr'); });
+      stat('events').textContent = fmt.format(list.length);
+      stat('cities').textContent = fmt.format(ranked.length);
+      stat('orgs').textContent = fmt.format(Object.keys(orgs).length);
+      onlineEl.textContent = online ? online + ' etkinlik çevrim içi ya da konumsuz kaydedildi; haritada gösterilmiyor.' : '';
+      var max = ranked.length ? ranked[0][1] : 1;
+      citiesEl.innerHTML = ranked.slice(0, 8).map(function (r) {
+        return '<li><span class="cw-city">' + esc(r[0]) + '</span><span class="cw-bar" aria-hidden="true"><i style="width:' +
+          Math.max(6, Math.round(r[1] / max * 100)) + '%"></i></span><b>' + r[1] + '</b></li>';
+      }).join('');
+      openLink.href = searchUrl();
+      var f = embedSlot.querySelector('iframe');
+      if (f) f.src = searchUrl();
+      drawMap(list);
+    }
+
+    years.querySelectorAll('button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        year = btn.getAttribute('data-value');
+        years.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+        render();
+      });
+    });
+
+    embedBtn.addEventListener('click', function () {
+      var f = embedSlot.querySelector('iframe');
+      if (!f) {
+        f = document.createElement('iframe');
+        f.title = 'Code Week Talent Cup etkinlik listesi';
+        embedSlot.appendChild(f);
+      }
+      f.src = searchUrl();
+      embedSlot.hidden = false;
+      embedBtn.hidden = true;
+      embedSlot.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    if (source) source.textContent = 'Kaynak: codeweek.eu etkinlik araması (' + data.updated + ').';
+
+    function startMap() {
+      loadLeaflet(function () {
+        // Türkiye sınırlarına oturur; anahtar gerektirmeyen etiketsiz gri altlık
+        // (yabancı alfabeli yer adları yok), koyu temada koyu sürüm
+        var TR = [[35.8, 25.9], [42.1, 44.8]];
+        map = L.map(mapEl, { scrollWheelZoom: false, zoomSnap: 1, attributionControl: true, maxBounds: [[33, 20], [45, 50]] });
+        map.fitBounds(TR, { padding: [8, 8] });
+        var dark = root.getAttribute('data-theme') === 'dark';
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/' + (dark ? 'World_Dark_Gray_Base' : 'World_Light_Gray_Base') + '/MapServer/tile/{z}/{y}/{x}', {
+          maxZoom: 12, minZoom: 3,
+          attribution: 'Altlık &copy; Esri'
+        }).addTo(map);
+        window.addEventListener('resize', function () { map.fitBounds(TR, { padding: [8, 8] }); });
+        drawMap(rows());
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { io.disconnect(); startMap(); }
+      }, { rootMargin: '400px' });
+      io.observe(mapEl);
+    } else {
+      startMap();
+    }
+    render();
+  }
+
   /* --- Geri sayım -------------------------------------------------------- */
   // Hedef tarih sunucudan gelen yarışma başlangıcıdır; burada statik örnek.
   function initCountdown() {
@@ -368,6 +552,8 @@
     initModals();
     initRequestForm();
     initVideos();
+    initCarousel();
+    initCodeweek();
     initCountdown();
     initStickyShadow();
   });

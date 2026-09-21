@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css" />
 <title>Talent Cup nedir? · Talent Cup</title>
+<script src="data/codeweek-talentcup.js" defer></script>
 <script src="app.js" defer></script>
 </head>
 <body>
@@ -61,16 +62,33 @@
     </div>
   </section>
 
-  <!-- 2026: seviyelere göre proje -->
-  <section class="section section-tight" aria-labelledby="make-title">
-    <div class="wrap">
-      <span class="eyebrow">2026 projeleri</span>
-      <h2 id="make-title" class="section-title">Seviyene göre ne üreteceksin?</h2>
-      <ul class="make-grid">
-        <li class="card make-card"><span class="level-icon lv-peach" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 13.6V19h14v-1.4l-4.3-4.8-3.2 3.6-2.3-2.4L5 16.6ZM8.5 6.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg></span><h3>İlkokul</h3><p>AI afiş + 10 saniyelik AI video</p></li>
-        <li class="card make-card"><span class="level-icon lv-purple" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9h16v9.5A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5V9Zm6.2 3.3v5.4l4.6-2.7-4.6-2.7ZM3.6 4.8l14.6-2.6a1 1 0 0 1 1.2.8l.5 2.6-16 2.9-.5-2.6a1 1 0 0 1 .2-1.1Z"/></svg></span><h3>Ortaokul</h3><p>1 dakikalık kısa film + storyboard</p></li>
-        <li class="card make-card"><span class="level-icon lv-blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3a3 3 0 0 1 1 5.8V11h6.2A3 3 0 1 1 13.2 13H7v2.2A3 3 0 1 1 5 15.2V8.8A3 3 0 0 1 6 3Zm12 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg></span><h3>Lise</h3><p>En az 2 dakikalık kısa film + AI flow</p></li>
-      </ul>
+  <!-- Talent Cup nedir -->
+  <section class="section section-tight" id="nedir" aria-labelledby="what-title">
+    <div class="wrap what-grid">
+      <div>
+        <span class="eyebrow">Talent Cup nedir?</span>
+        <h2 id="what-title" class="section-title">Dijital yeteneğini keşfet.</h2>
+        <p class="what-text">Talent Cup, Bilişim School’un TALENT14 platformundaki yarışma modülüdür. İlkokul, ortaokul ve lise öğrencilerinin dijital yeteneklerini keşfetmesi ve ilgi alanlarında kendini göstermesi için hazırlandı.</p>
+        <p class="what-text">Her ekim, Avrupa Kod Haftası (EU Code Week) kapsamında düzenlenir. 2026’nın odağı yapay zekâ: iki aşama, üç seviye, tek final.</p>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Kimler katılabilir?</summary>
+          <p>Talent Cup 2026’ya kayıtlı okulların ilkokul, ortaokul ve lise öğrencileri. Yarıştığın seviyeyi okulun belirler.</p>
+        </details>
+        <details>
+          <summary>Nasıl başlarım?</summary>
+          <p>Öğretmeninden aktivasyon kodunu al, <a href="kayit.html">hesabını oluştur</a> ve kodu gir.</p>
+        </details>
+        <details>
+          <summary>Hangi konularda görev var?</summary>
+          <p>Bu yıl görevlerin hepsi yapay zekâ üzerine: yapay zekâya giriş, komut yazma, görsel üretimi, storyboard kurma ve kısa film kurgusu.</p>
+        </details>
+        <details>
+          <summary>Okulum nasıl yarışma düzenler?</summary>
+          <p>Ana sayfadaki <a href="index.html#okullar">yarışma talebi formunu</a> doldurun; ekibimiz size ulaşır.</p>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -248,6 +266,61 @@
     </div>
   </section>
 
+  <!-- EU Code Week: Talent Cup etkinlikleri (codeweek.eu arama verisi) -->
+  <section class="section section-tight" id="codeweek" aria-labelledby="cw-title">
+    <div class="wrap">
+      <div class="filters filters-tight films-head">
+        <div>
+          <span class="eyebrow">EU Code Week’te Talent Cup</span>
+          <h2 id="cw-title">Türkiye genelinde, yıllara göre.</h2>
+        </div>
+        <div class="segmented" data-cw-years role="group" aria-label="Yıl seçimi">
+          <button type="button" data-value="2025" aria-pressed="true">2025</button>
+          <button type="button" data-value="2024" aria-pressed="false">2024</button>
+          <button type="button" data-value="all" aria-pressed="false">Tümü</button>
+        </div>
+      </div>
+
+      <dl class="cw-stats" aria-live="polite">
+        <div><dt>Etkinlik</dt><dd data-cw-stat="events">–</dd></div>
+        <div><dt>İl</dt><dd data-cw-stat="cities">–</dd></div>
+        <div><dt>Okul / kurum</dt><dd data-cw-stat="orgs">–</dd></div>
+      </dl>
+
+      <div class="cw-grid">
+        <div class="cw-map-card">
+          <div class="cw-map" data-cw-map role="region" aria-label="Talent Cup etkinlik haritası. Noktalara tıklayınca etkinlik bilgisi açılır."></div>
+          <p class="cw-map-note">Her nokta codeweek.eu’ya kaydedilmiş bir Talent Cup etkinliği. Turuncu 2024, mor 2025. <span data-cw-online></span></p>
+        </div>
+
+        <div class="cw-side">
+          <h3 class="cw-side-title">En çok etkinlik yapılan iller</h3>
+          <ol class="cw-cities" data-cw-cities></ol>
+          <div class="cw-actions">
+            <button type="button" class="btn btn-white btn-sm" data-cw-embed>Codeweek listesini burada aç</button>
+            <a class="text-link" data-cw-open href="https://codeweek.eu/events?page=1&amp;year=2025&amp;query=talentcup" target="_blank" rel="noopener">codeweek.eu’da aç <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg><span class="visually-hidden"> (yeni sekmede açılır)</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cw-embed" data-cw-embed-slot hidden></div>
+      <p class="stats-note" data-cw-source></p>
+    </div>
+  </section>
+
+  <!-- 2026: seviyelere göre proje -->
+  <section class="section section-tight" aria-labelledby="make-title">
+    <div class="wrap">
+      <span class="eyebrow">2026 projeleri</span>
+      <h2 id="make-title" class="section-title">Seviyene göre ne üreteceksin?</h2>
+      <ul class="make-grid">
+        <li class="card make-card"><span class="level-icon lv-peach" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 13.6V19h14v-1.4l-4.3-4.8-3.2 3.6-2.3-2.4L5 16.6ZM8.5 6.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg></span><h3>İlkokul</h3><p>AI afiş + 10 saniyelik AI video</p></li>
+        <li class="card make-card"><span class="level-icon lv-purple" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9h16v9.5A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5V9Zm6.2 3.3v5.4l4.6-2.7-4.6-2.7ZM3.6 4.8l14.6-2.6a1 1 0 0 1 1.2.8l.5 2.6-16 2.9-.5-2.6a1 1 0 0 1 .2-1.1Z"/></svg></span><h3>Ortaokul</h3><p>1 dakikalık kısa film + storyboard</p></li>
+        <li class="card make-card"><span class="level-icon lv-blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3a3 3 0 0 1 1 5.8V11h6.2A3 3 0 1 1 13.2 13H7v2.2A3 3 0 1 1 5 15.2V8.8A3 3 0 0 1 6 3Zm12 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg></span><h3>Lise</h3><p>En az 2 dakikalık kısa film + AI flow</p></li>
+      </ul>
+    </div>
+  </section>
+
   <!-- Nasıl işler -->
   <section class="section section-tight" aria-labelledby="how-title">
     <div class="wrap">
@@ -278,33 +351,72 @@
     </div>
   </section>
 
-  <!-- Talent Cup nedir -->
-  <section class="section" id="nedir" aria-labelledby="what-title">
-    <div class="wrap what-grid">
-      <div>
-        <span class="eyebrow">Talent Cup nedir?</span>
-        <h2 id="what-title" class="section-title">Dijital yeteneğini keşfet.</h2>
-        <p class="what-text">Talent Cup, Bilişim School’un TALENT14 platformundaki yarışma modülüdür. İlkokul, ortaokul ve lise öğrencilerinin dijital yeteneklerini keşfetmesi ve ilgi alanlarında kendini göstermesi için hazırlandı.</p>
-        <p class="what-text">Her ekim, Avrupa Kod Haftası (EU Code Week) kapsamında düzenlenir. 2026’nın odağı yapay zekâ: iki aşama, üç seviye, tek final.</p>
+  <!-- Türkiye'den kareler: okul haberleri ve duyurulardan -->
+  <section class="section section-tight gallery" aria-labelledby="gallery-title">
+    <div class="wrap">
+      <div class="gallery-head">
+        <div>
+          <span class="eyebrow">Türkiye’den kareler</span>
+          <h2 id="gallery-title" class="section-title">Belgeler ve ödüller.</h2>
+        </div>
+        <div class="carousel-controls">
+          <button type="button" class="icon-btn" data-carousel-prev aria-label="Önceki görsel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <button type="button" class="icon-btn" data-carousel-toggle aria-pressed="false" aria-label="Otomatik kaydırmayı durdur"><svg data-icon="pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg><svg data-icon="play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M8 5.8v12.4a1 1 0 0 0 1.5.9l10-6.2a1 1 0 0 0 0-1.8l-10-6.2A1 1 0 0 0 8 5.8Z"/></svg></button>
+          <button type="button" class="icon-btn" data-carousel-next aria-label="Sonraki görsel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
       </div>
-      <div class="faq">
-        <details>
-          <summary>Kimler katılabilir?</summary>
-          <p>Talent Cup 2026’ya kayıtlı okulların ilkokul, ortaokul ve lise öğrencileri. Yarıştığın seviyeyi okulun belirler.</p>
-        </details>
-        <details>
-          <summary>Nasıl başlarım?</summary>
-          <p>Öğretmeninden aktivasyon kodunu al, <a href="kayit.html">hesabını oluştur</a> ve kodu gir.</p>
-        </details>
-        <details>
-          <summary>Hangi konularda görev var?</summary>
-          <p>Bu yıl görevlerin hepsi yapay zekâ üzerine: yapay zekâya giriş, komut yazma, görsel üretimi, storyboard kurma ve kısa film kurgusu.</p>
-        </details>
-        <details>
-          <summary>Okulum nasıl yarışma düzenler?</summary>
-          <p>Ana sayfadaki <a href="index.html#okullar">yarışma talebi formunu</a> doldurun; ekibimiz size ulaşır.</p>
-        </details>
-      </div>
+    </div>
+    <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="Okullardan Talent Cup ödül ve belge görselleri">
+      <ul class="carousel-track" data-carousel-track tabindex="0">
+          <li class="slide" aria-roledescription="slayt" aria-label="1 / 8">
+            <figure>
+              <div class="slide-img fit-cover"><img src="img/turkiye/kutukcu_belge1.webp" alt="Belgelerini aldılar — Kütükçü Alibey Ortaokulu, Ankara · 2024" width="900" height="675" loading="lazy" decoding="async" /></div>
+              <figcaption><strong>Belgelerini aldılar</strong><span>Kütükçü Alibey Ortaokulu, Ankara · 2024</span><a href="https://kutukcualibeyoo.meb.k12.tr/icerikler/turkiye-codeweek-2024-yarismasi-sonuclandi_15586370.html" target="_blank" rel="noopener">Okul haberi<span class="visually-hidden"> (yeni sekmede açılır)</span></a></figcaption>
+            </figure>
+          </li>
+          <li class="slide" aria-roledescription="slayt" aria-label="2 / 8">
+            <figure>
+              <div class="slide-img fit-cover"><img src="img/turkiye/fatih_27bas.webp" alt="Başarı belgesi töreni — Fatih Ortaokulu, Kütahya · 2025" width="900" height="404" loading="lazy" decoding="async" /></div>
+              <figcaption><strong>Başarı belgesi töreni</strong><span>Fatih Ortaokulu, Kütahya · 2025</span><a href="https://kutahyafatihoo.meb.k12.tr/icerikler/fatih-ortaokulunda-talent-cup-14-kodlama-ve-yapay-zeka-yarisma-haftasi-tamamlandi_16729004.html" target="_blank" rel="noopener">Okul haberi<span class="visually-hidden"> (yeni sekmede açılır)</span></a></figcaption>
+            </figure>
+          </li>
+          <li class="slide" aria-roledescription="slayt" aria-label="3 / 8">
+            <figure>
+              <div class="slide-img fit-cover"><img src="img/turkiye/kutukcu_1.webp" alt="Dereceye girenler ödüllendirildi — Kütükçü Alibey Ortaokulu, Ankara · 2024" width="900" height="675" loading="lazy" decoding="async" /></div>
+              <figcaption><strong>Dereceye girenler ödüllendirildi</strong><span>Kütükçü Alibey Ortaokulu, Ankara · 2024</span><a href="https://kutukcualibeyoo.meb.k12.tr/icerikler/turkiye-codeweek-2024-yarismasi-sonuclandi_15586370.html" target="_blank" rel="noopener">Okul haberi<span class="visually-hidden"> (yeni sekmede açılır)</span></a></figcaption>
+            </figure>
+          </li>
+          <li class="slide" aria-roledescription="slayt" aria-label="4 / 8">
+            <figure>
+              <div class="slide-img fit-contain"><img src="img/turkiye/fatih_bas.webp" alt="“Şampiyonlarımızı tebrik ediyoruz” — Fatih Ortaokulu · 2025" width="612" height="768" loading="lazy" decoding="async" /></div>
+              <figcaption><strong>“Şampiyonlarımızı tebrik ediyoruz”</strong><span>Fatih Ortaokulu · 2025</span><a href="https://kutahyafatihoo.meb.k12.tr/icerikler/fatih-ortaokulunda-talent-cup-14-kodlama-ve-yapay-zeka-yarisma-haftasi-tamamlandi_16729004.html" target="_blank" rel="noopener">Okul haberi<span class="visually-hidden"> (yeni sekmede açılır)</span></a></figcaption>
+            </figure>
+          </li>
+          <li class="slide" aria-roledescription="slayt" aria-label="5 / 8">
+            <figure>
+              <div class="slide-img fit-cover"><img src="img/turkiye/kutukcu_5.webp" alt="Okul idaresiyle belge töreni — Kütükçü Alibey Ortaokulu, Ankara · 2024" width="900" height="507" loading="lazy" decoding="async" /></div>
+              <figcaption><strong>Okul idaresiyle belge töreni</strong><span>Kütükçü Alibey Ortaokulu, Ankara · 2024</span><a href="https://kutukcualibeyoo.meb.k12.tr/icerikler/turkiye-codeweek-2024-yarismasi-sonuclandi_15586370.html" target="_blank" rel="noopener">Okul haberi<span class="visually-hidden"> (yeni sekmede açılır)</span></a></figcaption>
+            </figure>
+          </li>
+          <li class="slide" aria-roledescription="slayt" aria-label="6 / 8">
+            <figure>
+              <div class="slide-img fit-cover"><img src="img/turkiye/fatih_27_1.webp" alt="Sertifikalar dağıtıldı — Fatih Ortaokulu, Kütahya · 2025" width="900" height="404" loading="lazy" decoding="async" /></div>
+              <figcaption><strong>Sertifikalar dağıtıldı</strong><span>Fatih Ortaokulu, Kütahya · 2025</span><a href="https://kutahyafatihoo.meb.k12.tr/icerikler/fatih-ortaokulunda-talent-cup-14-kodlama-ve-yapay-zeka-yarisma-haftasi-tamamlandi_16729004.html" target="_blank" rel="noopener">Okul haberi<span class="visually-hidden"> (yeni sekmede açılır)</span></a></figcaption>
+            </figure>
+          </li>
+          <li class="slide" aria-roledescription="slayt" aria-label="7 / 8">
+            <figure>
+              <div class="slide-img fit-cover"><img src="img/turkiye/bilsem_defne.webp" alt="Türkiye 6.sı oldu — Büyükçekmece BİLSEM, İstanbul · 2025" width="900" height="506" loading="lazy" decoding="async" /></div>
+              <figcaption><strong>Türkiye 6.sı oldu</strong><span>Büyükçekmece BİLSEM, İstanbul · 2025</span><a href="https://buyukcekmecebilsem.meb.k12.tr/icerikler/talentcup2025avrupabirligikodlamayapayzekasiberguvenlikyarismasindaogrencimizdenbuyukbasari_16810086.html" target="_blank" rel="noopener">Okul haberi<span class="visually-hidden"> (yeni sekmede açılır)</span></a></figcaption>
+            </figure>
+          </li>
+          <li class="slide" aria-roledescription="slayt" aria-label="8 / 8">
+            <figure>
+              <div class="slide-img fit-cover"><img src="img/turkiye/kutukcu_belge2.webp" alt="Talent Cup belgeleriyle — Kütükçü Alibey Ortaokulu, Ankara · 2024" width="900" height="675" loading="lazy" decoding="async" /></div>
+              <figcaption><strong>Talent Cup belgeleriyle</strong><span>Kütükçü Alibey Ortaokulu, Ankara · 2024</span><a href="https://kutukcualibeyoo.meb.k12.tr/icerikler/turkiye-codeweek-2024-yarismasi-sonuclandi_15586370.html" target="_blank" rel="noopener">Okul haberi<span class="visually-hidden"> (yeni sekmede açılır)</span></a></figcaption>
+            </figure>
+          </li>
+      </ul>
     </div>
   </section>
 
