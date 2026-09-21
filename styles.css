@@ -1407,3 +1407,9 @@ html, body { overflow-x: clip; }
 .gallery .carousel-track { --gutter: 14px; padding: 12px 14px 22px; }
 .gallery .slide figure { box-shadow: 0 4px 14px rgba(49, 36, 110, 0.09); }
 :root[data-theme="dark"] .gallery .slide figure { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); }
+/* Menü öğeleri bölünmesin; dar masaüstünde sıkışır */
+.topnav a { white-space: nowrap; }
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .topnav { gap: 0; }
+  .topnav a { padding-inline: 12px; font-size: 16px; }
+}
