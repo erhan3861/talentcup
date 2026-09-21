@@ -1493,3 +1493,24 @@ html, body { overflow-x: clip; }
 .make-deco { right: -34px; bottom: -44px; }
 .make-deco svg { width: 140px; height: 140px; }
 .make-card p { max-width: 24ch; }
+
+/* --- 31. Seviye kartı illüstrasyonları (Scratch kedisi: Scratch Foundation, CC BY-SA 2.0) */
+.make-card { min-height: 230px; }
+.make-art {
+  position: absolute; right: 10px; bottom: 10px; z-index: -1;
+  width: 150px; height: auto; pointer-events: none;
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.make-card:hover .make-art { transform: rotate(-4deg) scale(1.08); }
+.make-card p { max-width: 20ch; }
+@media (max-width: 520px) { .make-art { width: 124px; } .make-card { min-height: 210px; } }
+/* İllüstrasyon ikonun yanındaki boş üst köşede: metnin üstüne binmez */
+.make-art { top: 18px; bottom: auto; right: 14px; }
+.make-card p { max-width: none; }
+.make-card { min-height: 0; }
+
+/* --- 32. Yarışma sayfası bandı: kartla aynı fotoğraf ------------------- */
+.page-banner-art.art-gorevler {
+  background-image: url("img/banner-gorevler.webp");
+  background-position: 50% 45%;
+}
