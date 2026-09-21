@@ -1382,3 +1382,28 @@ html, body { overflow-x: clip; }
   .cw-side { padding: var(--s5); }
 }
 @media (max-width: 520px) { .cw-map { height: 280px; } }
+
+/* --- 29. Proje sayfalama + carousel içerik hizasında ------------------- */
+.pager { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: var(--s8); }
+.pager .icon-btn { width: 48px; height: 48px; }
+.pager .icon-btn svg { width: 20px; height: 20px; }
+.pager .icon-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: var(--shadow-sm); }
+.pager-pages { display: flex; gap: 6px; }
+.pager-pages button {
+  min-width: 48px; height: 48px; padding: 0 12px; border: 0; border-radius: 999px; cursor: pointer;
+  font: inherit; font-size: 16px; font-weight: 800; color: var(--text-muted); background: var(--surface); box-shadow: var(--shadow-sm);
+}
+.pager-pages button:hover { color: var(--brand-700); background: var(--brand-100); }
+.pager-pages button[aria-current="page"] { background: var(--brand); color: var(--on-brand); }
+
+/* Carousel artık .wrap içinde: kartlar içerik kenarını aşmaz */
+.gallery .carousel { margin-inline: -6px; }
+.gallery .carousel-track {
+  --gutter: 6px;
+  -webkit-mask-image: none; mask-image: none;
+}
+/* Carousel gölgesi kesik kutu izi bırakmasın: gölge küçük, kırpma alanı gölge kadar geniş */
+.gallery .carousel { margin: -12px -14px; }
+.gallery .carousel-track { --gutter: 14px; padding: 12px 14px 22px; }
+.gallery .slide figure { box-shadow: 0 4px 14px rgba(49, 36, 110, 0.09); }
+:root[data-theme="dark"] .gallery .slide figure { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35); }

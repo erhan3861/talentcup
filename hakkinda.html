@@ -62,33 +62,16 @@
     </div>
   </section>
 
-  <!-- Talent Cup nedir -->
-  <section class="section section-tight" id="nedir" aria-labelledby="what-title">
-    <div class="wrap what-grid">
-      <div>
-        <span class="eyebrow">Talent Cup nedir?</span>
-        <h2 id="what-title" class="section-title">Dijital yeteneğini keşfet.</h2>
-        <p class="what-text">Talent Cup, Bilişim School’un TALENT14 platformundaki yarışma modülüdür. İlkokul, ortaokul ve lise öğrencilerinin dijital yeteneklerini keşfetmesi ve ilgi alanlarında kendini göstermesi için hazırlandı.</p>
-        <p class="what-text">Her ekim, Avrupa Kod Haftası (EU Code Week) kapsamında düzenlenir. 2026’nın odağı yapay zekâ: iki aşama, üç seviye, tek final.</p>
-      </div>
-      <div class="faq">
-        <details>
-          <summary>Kimler katılabilir?</summary>
-          <p>Talent Cup 2026’ya kayıtlı okulların ilkokul, ortaokul ve lise öğrencileri. Yarıştığın seviyeyi okulun belirler.</p>
-        </details>
-        <details>
-          <summary>Nasıl başlarım?</summary>
-          <p>Öğretmeninden aktivasyon kodunu al, <a href="kayit.html">hesabını oluştur</a> ve kodu gir.</p>
-        </details>
-        <details>
-          <summary>Hangi konularda görev var?</summary>
-          <p>Bu yıl görevlerin hepsi yapay zekâ üzerine: yapay zekâya giriş, komut yazma, görsel üretimi, storyboard kurma ve kısa film kurgusu.</p>
-        </details>
-        <details>
-          <summary>Okulum nasıl yarışma düzenler?</summary>
-          <p>Ana sayfadaki <a href="index.html#okullar">yarışma talebi formunu</a> doldurun; ekibimiz size ulaşır.</p>
-        </details>
-      </div>
+  <!-- 2026: seviyelere göre proje -->
+  <section class="section section-tight" aria-labelledby="make-title">
+    <div class="wrap">
+      <span class="eyebrow">2026 projeleri</span>
+      <h2 id="make-title" class="section-title">Seviyene göre ne üreteceksin?</h2>
+      <ul class="make-grid">
+        <li class="card make-card"><span class="level-icon lv-peach" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.5 7h9a5.5 5.5 0 0 1 5.3 7l-.9 3.2a2.4 2.4 0 0 1-4 1l-2.2-2.2H9.3l-2.2 2.2a2.4 2.4 0 0 1-4-1L2.2 14a5.5 5.5 0 0 1 5.3-7Zm-.5 3v1.5H5.5V13H7v1.5h1.5V13H10v-1.5H8.5V10H7Zm9.5 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm-2 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg></span><h3>İlkokul</h3><p>Scratch ile oyun + AI ile oyun tanıtım afişi</p></li>
+        <li class="card make-card"><span class="level-icon lv-purple" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9h16v9.5A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5V9Zm6.2 3.3v5.4l4.6-2.7-4.6-2.7ZM3.6 4.8l14.6-2.6a1 1 0 0 1 1.2.8l.5 2.6-16 2.9-.5-2.6a1 1 0 0 1 .2-1.1Z"/></svg></span><h3>Ortaokul</h3><p>1 dakikalık kısa film + storyboard</p></li>
+        <li class="card make-card"><span class="level-icon lv-blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3a3 3 0 0 1 1 5.8V11h6.2A3 3 0 1 1 13.2 13H7v2.2A3 3 0 1 1 5 15.2V8.8A3 3 0 0 1 6 3Zm12 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg></span><h3>Lise</h3><p>En az 2 dakikalık kısa film + AI flow</p></li>
+      </ul>
     </div>
   </section>
 
@@ -116,7 +99,7 @@
     <div class="wrap">
       <div class="filters filters-tight films-head">
         <div>
-          <span class="eyebrow">2025 öğrenci filmleri</span>
+          <span class="eyebrow">2025 öğrenci projeleri</span>
           <h2 id="films-title">Seviyene göre izle.</h2>
         </div>
         <div class="segmented" data-filter="level" role="group" aria-label="Okul seviyesi filtreleri">
@@ -129,7 +112,7 @@
 
       <p class="visually-hidden" role="status" aria-live="polite" data-filter-status></p>
 
-      <div class="video-grid" data-comp-grid>
+      <div class="video-grid" data-comp-grid data-page-size="9">
         <button type="button" class="video-card" data-comp data-level="ortaokul" data-video="KDTEvt0zaws" data-video-title="Ben Büyürken" data-modal-open="video-modal" aria-haspopup="dialog">
           <span class="video-thumb">
             <img src="video/KDTEvt0zaws.webp" alt="" width="640" height="360" loading="lazy" />
@@ -253,8 +236,14 @@
         </button>
       </div>
 
+      <nav class="pager" data-pager aria-label="Proje sayfaları" hidden>
+        <button type="button" class="icon-btn" data-pager-prev aria-label="Önceki sayfa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div class="pager-pages" data-pager-pages></div>
+        <button type="button" class="icon-btn" data-pager-next aria-label="Sonraki sayfa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
+      </nav>
+
       <div class="empty" data-empty hidden>
-        <h2>Bu seviyede film yok.</h2>
+        <h2>Bu seviyede proje yok.</h2>
       </div>
 
       <p class="playlist-links">
@@ -297,27 +286,12 @@
           <h3 class="cw-side-title">En çok etkinlik yapılan iller</h3>
           <ol class="cw-cities" data-cw-cities></ol>
           <div class="cw-actions">
-            <button type="button" class="btn btn-white btn-sm" data-cw-embed>Codeweek listesini burada aç</button>
             <a class="text-link" data-cw-open href="https://codeweek.eu/events?page=1&amp;year=2025&amp;query=talentcup" target="_blank" rel="noopener">codeweek.eu’da aç <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg><span class="visually-hidden"> (yeni sekmede açılır)</span></a>
           </div>
         </div>
       </div>
 
-      <div class="cw-embed" data-cw-embed-slot hidden></div>
       <p class="stats-note" data-cw-source></p>
-    </div>
-  </section>
-
-  <!-- 2026: seviyelere göre proje -->
-  <section class="section section-tight" aria-labelledby="make-title">
-    <div class="wrap">
-      <span class="eyebrow">2026 projeleri</span>
-      <h2 id="make-title" class="section-title">Seviyene göre ne üreteceksin?</h2>
-      <ul class="make-grid">
-        <li class="card make-card"><span class="level-icon lv-peach" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 13.6V19h14v-1.4l-4.3-4.8-3.2 3.6-2.3-2.4L5 16.6ZM8.5 6.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg></span><h3>İlkokul</h3><p>AI afiş + 10 saniyelik AI video</p></li>
-        <li class="card make-card"><span class="level-icon lv-purple" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9h16v9.5A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5V9Zm6.2 3.3v5.4l4.6-2.7-4.6-2.7ZM3.6 4.8l14.6-2.6a1 1 0 0 1 1.2.8l.5 2.6-16 2.9-.5-2.6a1 1 0 0 1 .2-1.1Z"/></svg></span><h3>Ortaokul</h3><p>1 dakikalık kısa film + storyboard</p></li>
-        <li class="card make-card"><span class="level-icon lv-blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3a3 3 0 0 1 1 5.8V11h6.2A3 3 0 1 1 13.2 13H7v2.2A3 3 0 1 1 5 15.2V8.8A3 3 0 0 1 6 3Zm12 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg></span><h3>Lise</h3><p>En az 2 dakikalık kısa film + AI flow</p></li>
-      </ul>
     </div>
   </section>
 
@@ -365,8 +339,7 @@
           <button type="button" class="icon-btn" data-carousel-next aria-label="Sonraki görsel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button>
         </div>
       </div>
-    </div>
-    <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="Okullardan Talent Cup ödül ve belge görselleri">
+      <div class="carousel" data-carousel aria-roledescription="carousel" aria-label="Okullardan Talent Cup ödül ve belge görselleri">
       <ul class="carousel-track" data-carousel-track tabindex="0">
           <li class="slide" aria-roledescription="slayt" aria-label="1 / 8">
             <figure>
@@ -417,6 +390,37 @@
             </figure>
           </li>
       </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Talent Cup nedir -->
+  <section class="section" id="nedir" aria-labelledby="what-title">
+    <div class="wrap what-grid">
+      <div>
+        <span class="eyebrow">Talent Cup nedir?</span>
+        <h2 id="what-title" class="section-title">Dijital yeteneğini keşfet.</h2>
+        <p class="what-text">Talent Cup, Bilişim School’un TALENT14 platformundaki yarışma modülüdür. İlkokul, ortaokul ve lise öğrencilerinin dijital yeteneklerini keşfetmesi ve ilgi alanlarında kendini göstermesi için hazırlandı.</p>
+        <p class="what-text">Her ekim, Avrupa Kod Haftası (EU Code Week) kapsamında düzenlenir. 2026’nın odağı yapay zekâ: iki aşama, üç seviye, tek final.</p>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Kimler katılabilir?</summary>
+          <p>Talent Cup 2026’ya kayıtlı okulların ilkokul, ortaokul ve lise öğrencileri. Yarıştığın seviyeyi okulun belirler.</p>
+        </details>
+        <details>
+          <summary>Nasıl başlarım?</summary>
+          <p>Öğretmeninden aktivasyon kodunu al, <a href="kayit.html">hesabını oluştur</a> ve kodu gir.</p>
+        </details>
+        <details>
+          <summary>Hangi konularda görev var?</summary>
+          <p>Bu yıl görevlerin hepsi yapay zekâ üzerine. İlkokulda Scratch ile kodlama oyunları ve AI ile afiş; ortaokul ve lisede komut yazma, görsel üretimi, storyboard kurma ve kısa film kurgusu.</p>
+        </details>
+        <details>
+          <summary>Okulum nasıl yarışma düzenler?</summary>
+          <p>Ana sayfadaki <a href="index.html#okullar">yarışma talebi formunu</a> doldurun; ekibimiz size ulaşır.</p>
+        </details>
+      </div>
     </div>
   </section>
 

@@ -72,17 +72,44 @@
     var status = document.querySelector('[data-filter-status]');
     var empty = document.querySelector('[data-empty]');
 
+    // data-page-size varsa eşleşen kartlar sayfalara bölünür (örn. 3x3 = 9)
+    var pageSize = parseInt(grid.getAttribute('data-page-size'), 10) || 0;
+    var pager = document.querySelector('[data-pager]');
+    var page = 1;
+
+    function renderPager(total) {
+      if (!pager) return;
+      var pages = pageSize ? Math.ceil(total / pageSize) : 1;
+      pager.hidden = pages <= 1;
+      var box = pager.querySelector('[data-pager-pages]');
+      box.innerHTML = '';
+      for (var i = 1; i <= pages; i++) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = i;
+        b.setAttribute('aria-label', 'Sayfa ' + i);
+        if (i === page) b.setAttribute('aria-current', 'page');
+        b.addEventListener('click', (function (n) { return function () { page = n; render(); }; })(i));
+        box.appendChild(b);
+      }
+      pager.querySelector('[data-pager-prev]').disabled = page <= 1;
+      pager.querySelector('[data-pager-next]').disabled = page >= pages;
+    }
+
     function render() {
-      var shown = 0;
+      var shown = 0, matched = 0;
       grid.querySelectorAll('[data-comp]').forEach(function (card) {
         var match = Object.keys(state).every(function (name) {
           if (state[name] === 'all') return true;
           var values = (card.getAttribute('data-' + name) || '').split(/\s+/);
           return values.indexOf(state[name]) !== -1;
         });
-        card.hidden = !match;
+        if (match) matched += 1;
+        var onPage = !pageSize || (matched > (page - 1) * pageSize && matched <= page * pageSize);
+        card.hidden = !(match && onPage);
         if (match) shown += 1;
       });
+      renderPager(matched);
       if (empty) empty.hidden = shown !== 0;
       if (status) {
         status.textContent = shown === 0
@@ -98,6 +125,7 @@
       group.querySelectorAll('button').forEach(function (btn) {
         btn.addEventListener('click', function () {
           state[name] = btn.getAttribute('data-value');
+          page = 1;
           group.querySelectorAll('button').forEach(function (b) {
             b.setAttribute('aria-pressed', String(b === btn));
           });
@@ -105,6 +133,11 @@
         });
       });
     });
+
+    if (pager) {
+      pager.querySelector('[data-pager-prev]').addEventListener('click', function () { page -= 1; render(); });
+      pager.querySelector('[data-pager-next]').addEventListener('click', function () { page += 1; render(); });
+    }
 
     render();
   }
@@ -365,7 +398,7 @@
   /* --- EU Code Week: Talent Cup haritası -------------------------------- */
   // Veri: data/codeweek-talentcup.js (codeweek.eu aramasından derlendi).
   // Leaflet bölüm ekrana yaklaşınca yüklenir; harita dışındaki sayılar ve
-  // il listesi haritasız da çalışır. Codeweek listesi ancak istenince iframe'e gelir.
+  // il listesi haritasız da çalışır. 
   var LEAFLET = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/';
   function loadLeaflet(cb) {
     if (window.L) { cb(); return; }
@@ -385,8 +418,6 @@
     var mapEl = section.querySelector('[data-cw-map]');
     var citiesEl = section.querySelector('[data-cw-cities]');
     var openLink = section.querySelector('[data-cw-open]');
-    var embedBtn = section.querySelector('[data-cw-embed]');
-    var embedSlot = section.querySelector('[data-cw-embed-slot]');
     var source = section.querySelector('[data-cw-source]');
     var onlineEl = section.querySelector('[data-cw-online]');
     var stat = function (k) { return section.querySelector('[data-cw-stat="' + k + '"]'); };
@@ -442,8 +473,6 @@
           Math.max(6, Math.round(r[1] / max * 100)) + '%"></i></span><b>' + r[1] + '</b></li>';
       }).join('');
       openLink.href = searchUrl();
-      var f = embedSlot.querySelector('iframe');
-      if (f) f.src = searchUrl();
       drawMap(list);
     }
 
@@ -453,19 +482,6 @@
         years.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
         render();
       });
-    });
-
-    embedBtn.addEventListener('click', function () {
-      var f = embedSlot.querySelector('iframe');
-      if (!f) {
-        f = document.createElement('iframe');
-        f.title = 'Code Week Talent Cup etkinlik listesi';
-        embedSlot.appendChild(f);
-      }
-      f.src = searchUrl();
-      embedSlot.hidden = false;
-      embedBtn.hidden = true;
-      embedSlot.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     if (source) source.textContent = 'Kaynak: codeweek.eu etkinlik araması (' + data.updated + ').';
