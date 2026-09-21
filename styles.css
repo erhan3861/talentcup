@@ -1215,3 +1215,18 @@ input[type="date"].input { padding-right: 14px; }
 @media (min-width: 861px) and (max-height: 760px) {
   .auth-min .auth-main { padding-block: 1svh 2svh; }
 }
+
+/* Seviye kartları: başlığın yanında küçük renkli ikon; kart yüksekliği değişmez */
+.level b { display: flex; align-items: center; gap: 8px; }
+.level-icon { display: grid; place-items: center; width: 26px; height: 26px; flex: none; border-radius: 50%; color: #fff; }
+.level-icon svg { width: 15px; height: 15px; }
+.lv-peach  { background: radial-gradient(circle at 35% 30%, #ffd166, #f08c00); color: #211c4e; }
+.lv-purple { background: radial-gradient(circle at 35% 30%, #7d5cf2, #5a2fd6); }
+.lv-blue   { background: radial-gradient(circle at 35% 30%, #4aa3f5, #1570cc); }
+.level { min-width: 0; }
+.level span:not(.level-icon) { overflow-wrap: anywhere; }
+#program .level .level-icon, .level .level-icon { display: grid; font-size: 0; line-height: 0; }
+.level-icon { width: 32px; height: 32px; }
+.level-icon svg { width: 18px; height: 18px; }
+.level b { gap: 10px; margin-bottom: 6px; }
+@media (max-width: 959px) { .format-card .stage + .stage { margin-top: 12px; } }
