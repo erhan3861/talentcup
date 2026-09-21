@@ -1193,3 +1193,25 @@ input[type="date"].input { padding-right: 14px; }
   .auth-min .hint { margin-top: 4px; }
   .auth-foot { margin-top: 8px; }
 }
+
+/* Google ile giriş: beyaz buton + ince çerçeve (Google marka yönergesi), "veya" çizgisiz */
+.btn-google { margin-top: clamp(18px, 3svh, 26px); gap: 12px; box-shadow: var(--shadow-sm); border: 1.5px solid var(--border-input); }
+.btn-google:hover:not(:disabled) { box-shadow: var(--shadow); }
+.auth-or { margin: 12px 0 0; text-align: center; font-size: 14px; font-weight: 700; color: var(--text-subtle); }
+.auth-min .btn-google + .auth-or + .auth-form { margin-top: 8px; }
+@media (max-width: 860px) and (max-height: 700px) {
+  .btn-google { margin-top: 12px; min-height: 48px; }
+  .auth-or { margin-top: 6px; }
+  .auth-min .auth-card > .lead { display: none; }
+}
+
+/* Google butonu formun altında: "veya" arada, çizgisiz */
+.auth-min .auth-form + .auth-or { margin-top: 12px; }
+.auth-or + .btn-google { margin-top: 10px; }
+@media (max-width: 860px) and (max-height: 700px) {
+  .auth-min .auth-form + .auth-or { margin-top: 6px; }
+  .auth-or + .btn-google { margin-top: 6px; }
+}
+@media (min-width: 861px) and (max-height: 760px) {
+  .auth-min .auth-main { padding-block: 1svh 2svh; }
+}
