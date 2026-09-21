@@ -77,6 +77,18 @@
     var pager = document.querySelector('[data-pager]');
     var page = 1;
 
+    // Sayfa değişince liste kısalabilir; ekranı bölümün başına al ki
+    // yeni sayfanın kartları görünsün, alttaki bölüme kaymasın.
+    function goTo(n) {
+      page = n;
+      render();
+      var target = grid.closest('section') || grid;
+      var bar = document.querySelector('.topbar');
+      var top = target.getBoundingClientRect().top + window.scrollY - (bar ? bar.offsetHeight : 0) - 8;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+    }
+
     function renderPager(total) {
       if (!pager) return;
       var pages = pageSize ? Math.ceil(total / pageSize) : 1;
@@ -89,7 +101,7 @@
         b.textContent = i;
         b.setAttribute('aria-label', 'Sayfa ' + i);
         if (i === page) b.setAttribute('aria-current', 'page');
-        b.addEventListener('click', (function (n) { return function () { page = n; render(); }; })(i));
+        b.addEventListener('click', (function (n) { return function () { goTo(n); }; })(i));
         box.appendChild(b);
       }
       pager.querySelector('[data-pager-prev]').disabled = page <= 1;
@@ -135,8 +147,8 @@
     });
 
     if (pager) {
-      pager.querySelector('[data-pager-prev]').addEventListener('click', function () { page -= 1; render(); });
-      pager.querySelector('[data-pager-next]').addEventListener('click', function () { page += 1; render(); });
+      pager.querySelector('[data-pager-prev]').addEventListener('click', function () { goTo(page - 1); });
+      pager.querySelector('[data-pager-next]').addEventListener('click', function () { goTo(page + 1); });
     }
 
     render();
